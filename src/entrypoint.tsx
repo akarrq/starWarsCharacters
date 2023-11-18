@@ -4,6 +4,8 @@ import { createBrowserRouter, RouterProvider } from 'react-router-dom';
 import App from './App';
 import ErrorPage from './error-page';
 
+import './styles.css';
+
 const rootElement = document.getElementById('root');
 const root = createRoot(rootElement!);
 
