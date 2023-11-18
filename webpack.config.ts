@@ -1,8 +1,7 @@
 import path from 'path';
-import { Configuration } from 'webpack';
 import CopyWebpackPlugin from 'copy-webpack-plugin';
 
-const config: Configuration = {
+const config = {
 	mode:
 		(process.env.NODE_ENV as 'production' | 'development' | undefined) ??
 		'development',
@@ -32,6 +31,9 @@ const config: Configuration = {
 			patterns: [{ from: 'public' }],
 		}),
 	],
+	devServer: {
+		historyApiFallback: true,
+	},
 };
 
 export default config;
