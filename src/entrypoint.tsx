@@ -5,6 +5,7 @@ import App from './App';
 import ErrorPage from './error-page';
 
 import './styles.css';
+import '@fontsource/inter';
 
 const rootElement = document.getElementById('root');
 const root = createRoot(rootElement!);
