@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { useState, MouseEvent, useEffect } from 'react';
+import { useState, MouseEvent, useEffect, useRef, ChangeEvent } from 'react';
 
 import Box from '@mui/joy/Box';
 import Table from '@mui/joy/Table';
@@ -20,7 +20,13 @@ import {
 	labelDisplayedRows,
 	stableSort,
 } from '../helpers/charactersTable';
-import { Character, Data, Planet, TableHeadProps } from '../types/interface';
+import {
+	Character,
+	Data,
+	Planet,
+	TableHeadProps,
+	TableToolbarProps,
+} from '../types/interface';
 import { TableOrder } from '../types/type';
 import { Input } from '@mui/joy';
 
@@ -83,7 +89,20 @@ function TableHead(props: TableHeadProps) {
 	);
 }
 
-function TableToolbar() {
+function TableToolbar(props: TableToolbarProps) {
+	const { handleSearchCharacters } = props;
+	const timerRef = useRef<number>();
+
+	const handleChange = (event: ChangeEvent<HTMLInputElement>) => {
+		if (timerRef.current) {
+			clearTimeout(timerRef.current);
+		}
+
+		timerRef.current = window.setTimeout(() => {
+			handleSearchCharacters(event.target.value);
+		}, 1000);
+	};
+
 	return (
 		<Box
 			sx={{
@@ -106,7 +125,8 @@ function TableToolbar() {
 			</Typography>
 			<Box sx={{ display: 'flex', flexShrink: 0, gap: 2 }}>
 				<Input
-					placeholder="Search"
+					onChange={handleChange}
+					placeholder="Search character"
 					variant="soft"
 					size="md"
 					sx={{
@@ -131,10 +151,10 @@ export default function CharactersTable({
 	const [page, setPage] = useState(1);
 	const rowsPerPage: number = 10;
 
-	const fetchData = async (page: number) => {
+	const fetchData = async (page: string) => {
 		try {
 			const response = await fetch(
-				`https://swapi.dev/api/people/?page=${page}`
+				`https://swapi.dev/api/people/?search=${page}`
 			);
 			const data = await response.json();
 			setData(data);
@@ -171,7 +191,7 @@ export default function CharactersTable({
 	}, [data]);
 
 	useEffect(() => {
-		fetchData(1);
+		fetchData('&page=1');
 	}, []);
 
 	const handleRequestSort = (
@@ -187,7 +207,13 @@ export default function CharactersTable({
 		setPage(newPage);
 		setData(null);
 		setPlanets(null);
-		fetchData(newPage);
+		fetchData(`&page=${newPage}`);
+	};
+
+	const handleSearchCharacters = (term: string) => {
+		setData(null);
+		setPlanets(null);
+		fetchData(`${term}&page=${page}`);
 	};
 
 	const getLabelDisplayedRowsTo = () => {
@@ -220,7 +246,7 @@ export default function CharactersTable({
 				borderRadius: 'sm',
 			}}
 		>
-			<TableToolbar />
+			<TableToolbar handleSearchCharacters={handleSearchCharacters} />
 			<Table
 				stickyHeader
 				stickyFooter
