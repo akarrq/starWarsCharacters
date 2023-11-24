@@ -22,6 +22,7 @@ import {
 } from '../helpers/charactersTable';
 import { Character, Data, Planet, TableHeadProps } from '../types/interface';
 import { TableOrder } from '../types/type';
+import { Input } from '@mui/joy';
 
 function TableHead(props: TableHeadProps) {
 	const { order, orderBy, onRequestSort } = props;
@@ -103,6 +104,17 @@ function TableToolbar() {
 			>
 				Characters List
 			</Typography>
+			<Box sx={{ display: 'flex', flexShrink: 0, gap: 2 }}>
+				<Input
+					placeholder="Search"
+					variant="soft"
+					size="md"
+					sx={{
+						'--Input-paddingInline': '12px',
+						display: { xs: 'none', lg: 'flex' },
+					}}
+				/>
+			</Box>
 		</Box>
 	);
 }
