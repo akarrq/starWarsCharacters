@@ -20,17 +20,6 @@ export default function Nav() {
 					Star Wars Characters
 				</Typography>
 			</Box>
-			<Box sx={{ display: 'flex', flexShrink: 0, gap: 2 }}>
-				<Input
-					placeholder="Search"
-					variant="soft"
-					size="md"
-					sx={{
-						'--Input-paddingInline': '12px',
-						display: { xs: 'none', lg: 'flex' },
-					}}
-				/>
-			</Box>
 		</Box>
 	);
 }

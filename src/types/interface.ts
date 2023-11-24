@@ -59,3 +59,7 @@ export interface TableHeadProps {
 	order: TableOrder;
 	orderBy: string;
 }
+
+export interface TableToolbarProps {
+	handleSearchCharacters: (term: string) => void;
+}
