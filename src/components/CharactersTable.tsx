@@ -1,6 +1,5 @@
 import * as React from 'react';
 import { useState, MouseEvent, useEffect } from 'react';
-import { Link as RouterLink } from 'react-router-dom';
 
 import Box from '@mui/joy/Box';
 import Table from '@mui/joy/Table';
@@ -108,7 +107,11 @@ function TableToolbar() {
 	);
 }
 
-export default function CharactersTable() {
+export default function CharactersTable({
+	setPlanet,
+}: {
+	setPlanet: React.Dispatch<React.SetStateAction<Planet | null>>;
+}) {
 	const [data, setData] = useState<Data | null>(null);
 	const [planets, setPlanets] = useState<Planet[] | null>(null);
 	const [order, setOrder] = useState<TableOrder>('asc');
@@ -185,23 +188,11 @@ export default function CharactersTable() {
 		return 0;
 	};
 
-	const getPlanetName = (planets: Planet[] | null, planetURL: string) => {
+	const getPlanet = (planets: Planet[] | null, planetURL: string) => {
 		const planet = planets?.find((planet) => planet.url === planetURL);
 		if (planet) {
-			return planet.name;
+			return planet;
 		} else return null;
-	};
-
-	const getPlanetId = (url: string) => {
-		if (url) {
-			const segments = url.split('/');
-
-			if (segments.length > 0 && segments[segments.length - 1] === '')
-				segments.pop();
-
-			return segments[segments.length - 1];
-		}
-		return null;
 	};
 
 	return (
@@ -252,10 +243,11 @@ export default function CharactersTable() {
 										<td>
 											{planets ? (
 												<Link
-													component={RouterLink}
-													to={`planet/${getPlanetId(row.homeworld)}`}
+													onClick={() =>
+														setPlanet(getPlanet(planets, row.homeworld))
+													}
 												>
-													{getPlanetName(planets, row.homeworld)}
+													{getPlanet(planets, row.homeworld)?.name}
 												</Link>
 											) : (
 												<Skeleton variant="text" level="body-xs" />
