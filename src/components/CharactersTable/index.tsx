@@ -11,7 +11,11 @@ import TableToolbar from './TableToolbar';
 import TableFooter from './TableFooter';
 
 import { formatDate } from '../../helpers/helpers';
-import { getComparator, stableSort } from '../../helpers/charactersTable';
+import {
+	blankPlanet,
+	getComparator,
+	stableSort,
+} from '../../helpers/charactersTable';
 import { Character, Data, Planet } from '../../types/interface';
 import { TableOrder } from '../../types/type';
 
@@ -39,14 +43,14 @@ export default function CharactersTable({
 		}
 	};
 
-	const fetchPlanetData = async (planetURL: string) => {
+	const fetchPlanetData = async (planetURL: string): Promise<Planet> => {
 		try {
 			const response = await fetch(planetURL);
 			const data = await response.json();
 			return data;
 		} catch (error) {
 			console.error('Planets are not loaded. Something went wrong!');
-			return null;
+			return blankPlanet;
 		}
 	};
 
@@ -122,9 +126,9 @@ export default function CharactersTable({
 		<Sheet
 			variant="outlined"
 			sx={{
-				width: '90%',
+				width: ['99%', '90%'],
 				maxWidth: '1800px',
-				maxHeight: '70vh',
+				maxHeight: '80vh',
 				overflow: 'auto',
 				margin: '0 auto',
 				boxShadow: 'sm',
@@ -137,10 +141,10 @@ export default function CharactersTable({
 				stickyFooter
 				sx={{
 					'& thead th:nth-child(0)': {
-						width: '40px',
+						width: ['auto', '40px'],
 					},
 					'& thead th:nth-child(1)': {
-						width: '20%',
+						width: ['auto', '20%'],
 					},
 					'& tr > *:nth-child(n+2)': { textAlign: 'right' },
 				}}
