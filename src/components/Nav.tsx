@@ -1,7 +1,5 @@
 import * as React from 'react';
 import Box from '@mui/joy/Box';
-import { ColorPaletteProp } from '@mui/joy/styles';
-import Input from '@mui/joy/Input';
 import Typography from '@mui/joy/Typography';
 
 export default function Nav() {

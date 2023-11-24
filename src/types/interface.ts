@@ -63,3 +63,11 @@ export interface TableHeadProps {
 export interface TableToolbarProps {
 	handleSearchCharacters: (term: string) => void;
 }
+
+export interface TableFooterProps {
+	data: Data | null;
+	page: number;
+	rowsPerPage: number;
+	handleChangePage: (newPage: number) => void;
+	getLabelDisplayedRowsTo: () => number;
+}

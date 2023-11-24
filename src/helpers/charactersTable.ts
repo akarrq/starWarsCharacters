@@ -1,4 +1,4 @@
-import { HeadCell } from '../types/interface';
+import { HeadCell, Planet } from '../types/interface';
 import { TableOrder } from '../types/type';
 
 export function labelDisplayedRows({
@@ -87,3 +87,20 @@ export const headCells: readonly HeadCell[] = [
 		label: 'Planet',
 	},
 ];
+
+export const blankPlanet: Planet = {
+	climate: 'error',
+	created: 'error',
+	diameter: 'error',
+	edited: 'error',
+	films: 'error',
+	gravity: 'error',
+	name: 'error',
+	orbital_period: 'error',
+	population: 'error',
+	residents: 'error',
+	rotation_period: 'error',
+	surface_water: 'error',
+	terrain: 'error',
+	url: 'error',
+};
