@@ -49,8 +49,8 @@ export default function PlanetPage({
 				sx={{
 					textAlign: 'center',
 					alignItems: 'center',
-					height: '50%',
-					width: '33%',
+					height: ['60%', '50%'],
+					width: ['100%', '33%'],
 					'--icon-size': '100px',
 				}}
 			>
