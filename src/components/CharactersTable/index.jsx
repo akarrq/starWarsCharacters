@@ -164,7 +164,8 @@ export default function CharactersTable({ setPlanet }) {
 															setPlanet(getPlanet(planets, row.homeworld))
 														}
 													>
-														{getPlanet(planets, row.homeworld)?.name}
+														{getPlanet(planets, row.homeworld)?.name ||
+															'unknown'}
 													</Link>
 												) : (
 													<Skeleton variant="text" level="body-xs" />
