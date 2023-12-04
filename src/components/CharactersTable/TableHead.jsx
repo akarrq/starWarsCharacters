@@ -1,4 +1,4 @@
-import { MouseEvent } from 'react';
+import React from 'react';
 
 import Box from '@mui/joy/Box';
 import Link from '@mui/joy/Link';
@@ -6,14 +6,12 @@ import ArrowDownwardIcon from '@mui/icons-material/ArrowDownward';
 import { visuallyHidden } from '@mui/utils';
 
 import { headCells } from '../../helpers/charactersTable';
-import { Character, TableHeadProps } from '../../types/interface';
 
-export default function TableHead(props: TableHeadProps) {
+export default function TableHead(props) {
 	const { order, orderBy, onRequestSort } = props;
-	const createSortHandler =
-		(property: keyof Character) => (event: MouseEvent<unknown>) => {
-			onRequestSort(event, property);
-		};
+	const createSortHandler = (property) => (event) => {
+		onRequestSort(event, property);
+	};
 
 	return (
 		<thead>
