@@ -3,10 +3,19 @@ export function labelDisplayedRows({ from, to, count }) {
 }
 
 export function descendingComparator(a, b, orderBy) {
-	if (b[orderBy] < a[orderBy]) {
+	const valueA =
+		orderBy === 'height' || orderBy === 'mass'
+			? parseFloat(a[orderBy])
+			: a[orderBy];
+	const valueB =
+		orderBy === 'height' || orderBy === 'mass'
+			? parseFloat(b[orderBy])
+			: b[orderBy];
+
+	if (valueB < valueA) {
 		return -1;
 	}
-	if (b[orderBy] > a[orderBy]) {
+	if (valueB > valueA) {
 		return 1;
 	}
 	return 0;
@@ -17,53 +26,40 @@ export function getComparator(order, orderBy) {
 		? (a, b) => descendingComparator(a, b, orderBy)
 		: (a, b) => -descendingComparator(a, b, orderBy);
 }
-export function stableSort(array, comparator) {
-	const stabilizedThis = array.map((el, index) => [el, index]);
-	stabilizedThis.sort((a, b) => {
-		const order = comparator(a[0], b[0]);
-		if (order !== 0) {
-			return order;
-		}
-		return a[1] - b[1];
-	});
-	return stabilizedThis.map((el) => el[0]);
+
+export function sortElements(array, comparator) {
+	return [...array].sort((a, b) => comparator(a, b));
 }
 
 export const headCells = [
 	{
 		id: 'name',
 		numeric: false,
-		disablePadding: true,
 		label: 'Name',
 	},
 	{
 		id: 'height',
-		numeric: false,
-		disablePadding: false,
+		numeric: true,
 		label: 'Height',
 	},
 	{
 		id: 'mass',
-		numeric: false,
-		disablePadding: false,
+		numeric: true,
 		label: 'Mass',
 	},
 	{
 		id: 'created',
 		numeric: false,
-		disablePadding: false,
 		label: 'Created',
 	},
 	{
 		id: 'edited',
 		numeric: false,
-		disablePadding: false,
 		label: 'Edited',
 	},
 	{
 		id: 'homeworld',
 		numeric: false,
-		disablePadding: false,
 		label: 'Planet',
 	},
 ];

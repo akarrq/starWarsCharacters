@@ -13,7 +13,7 @@ import { formatDate } from '../../helpers/helpers';
 import {
 	blankPlanet,
 	getComparator,
-	stableSort,
+	sortElements,
 } from '../../helpers/charactersTable';
 
 export default function CharactersTable({ setPlanet }) {
@@ -98,9 +98,7 @@ export default function CharactersTable({ setPlanet }) {
 
 	const getPlanet = (planets, planetURL) => {
 		const planet = planets?.find((planet) => planet.url === planetURL);
-		if (planet) {
-			return planet;
-		} else return null;
+		return planet ? planet : null;
 	};
 
 	const generateSkeletonRow = useMemo(() => {
@@ -146,7 +144,7 @@ export default function CharactersTable({ setPlanet }) {
 				/>
 				<tbody>
 					{data
-						? stableSort(data.results, getComparator(order, orderBy)).map(
+						? sortElements(data.results, getComparator(order, orderBy)).map(
 								(row) => {
 									return (
 										<tr tabIndex={-1} key={row.name}>
