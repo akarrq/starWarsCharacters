@@ -1,3 +1,5 @@
+import React from 'react';
+
 import Box from '@mui/joy/Box';
 import IconButton from '@mui/joy/IconButton';
 import Typography from '@mui/joy/Typography';
@@ -6,9 +8,8 @@ import KeyboardArrowLeftIcon from '@mui/icons-material/KeyboardArrowLeft';
 import KeyboardArrowRightIcon from '@mui/icons-material/KeyboardArrowRight';
 
 import { labelDisplayedRows } from '../../helpers/charactersTable';
-import { TableFooterProps } from '../../types/interface';
 
-export default function TableFooter(props: TableFooterProps) {
+export default function TableFooter(props) {
 	const { data, page, rowsPerPage, handleChangePage, getLabelDisplayedRowsTo } =
 		props;
 	return (

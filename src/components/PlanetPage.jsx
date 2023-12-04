@@ -12,15 +12,7 @@ import IconButton from '@mui/joy/IconButton';
 import CloseIcon from '@mui/icons-material/Close';
 import TravelExploreIcon from '@mui/icons-material/TravelExplore';
 
-import { Planet } from '../types/interface';
-
-export default function PlanetPage({
-	planet,
-	setPlanet,
-}: {
-	planet: Planet | null;
-	setPlanet: React.Dispatch<React.SetStateAction<Planet | null>>;
-}) {
+export default function PlanetPage({ planet, setPlanet }) {
 	return planet ? (
 		<Sheet
 			sx={{

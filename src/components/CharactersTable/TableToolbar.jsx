@@ -1,16 +1,14 @@
-import { useRef, ChangeEvent } from 'react';
+import React, { useRef } from 'react';
 
 import Box from '@mui/joy/Box';
 import Input from '@mui/joy/Input';
 import Typography from '@mui/joy/Typography';
 
-import { TableToolbarProps } from '../../types/interface';
-
-export default function TableToolbar(props: TableToolbarProps) {
+export default function TableToolbar(props) {
 	const { handleSearchCharacters } = props;
-	const timerRef = useRef<number>();
+	const timerRef = useRef();
 
-	const handleChange = (event: ChangeEvent<HTMLInputElement>) => {
+	const handleChange = (event) => {
 		if (timerRef.current) {
 			clearTimeout(timerRef.current);
 		}

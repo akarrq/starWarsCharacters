@@ -1,5 +1,4 @@
-import * as React from 'react';
-import { useState, MouseEvent, useEffect, useMemo } from 'react';
+import React, { useState, useEffect, useMemo } from 'react';
 
 import Table from '@mui/joy/Table';
 import Sheet from '@mui/joy/Sheet';
@@ -14,24 +13,18 @@ import { formatDate } from '../../helpers/helpers';
 import {
 	blankPlanet,
 	getComparator,
-	stableSort,
+	sortElements,
 } from '../../helpers/charactersTable';
-import { Character, Data, Planet } from '../../types/interface';
-import { TableOrder } from '../../types/type';
 
-export default function CharactersTable({
-	setPlanet,
-}: {
-	setPlanet: React.Dispatch<React.SetStateAction<Planet | null>>;
-}) {
-	const [data, setData] = useState<Data | null>(null);
-	const [planets, setPlanets] = useState<Planet[] | null>(null);
-	const [order, setOrder] = useState<TableOrder>('asc');
-	const [orderBy, setOrderBy] = useState<keyof Character>('name');
+export default function CharactersTable({ setPlanet }) {
+	const [data, setData] = useState(null);
+	const [planets, setPlanets] = useState(null);
+	const [order, setOrder] = useState('asc');
+	const [orderBy, setOrderBy] = useState('name');
 	const [page, setPage] = useState(1);
-	const rowsPerPage: number = 10;
+	const rowsPerPage = 10;
 
-	const fetchData = async (page: string) => {
+	const fetchData = async (page) => {
 		try {
 			const response = await fetch(
 				`https://swapi.dev/api/people/?search=${page}`
@@ -43,7 +36,7 @@ export default function CharactersTable({
 		}
 	};
 
-	const fetchPlanetData = async (planetURL: string): Promise<Planet> => {
+	const fetchPlanetData = async (planetURL) => {
 		try {
 			const response = await fetch(planetURL);
 			const data = await response.json();
@@ -74,23 +67,20 @@ export default function CharactersTable({
 		fetchData('&page=1');
 	}, []);
 
-	const handleRequestSort = (
-		event: MouseEvent<unknown>,
-		property: keyof Character
-	) => {
+	const handleRequestSort = (event, property) => {
 		const isAsc = orderBy === property && order === 'asc';
 		setOrder(isAsc ? 'desc' : 'asc');
 		setOrderBy(property);
 	};
 
-	const handleChangePage = (newPage: number) => {
+	const handleChangePage = (newPage) => {
 		setPage(newPage);
 		setData(null);
 		setPlanets(null);
 		fetchData(`&page=${newPage}`);
 	};
 
-	const handleSearchCharacters = (term: string) => {
+	const handleSearchCharacters = (term) => {
 		setData(null);
 		setPlanets(null);
 		fetchData(`${term}&page=${page}`);
@@ -106,11 +96,9 @@ export default function CharactersTable({
 		return 0;
 	};
 
-	const getPlanet = (planets: Planet[] | null, planetURL: string) => {
+	const getPlanet = (planets, planetURL) => {
 		const planet = planets?.find((planet) => planet.url === planetURL);
-		if (planet) {
-			return planet;
-		} else return null;
+		return planet ? planet : null;
 	};
 
 	const generateSkeletonRow = useMemo(() => {
@@ -156,7 +144,7 @@ export default function CharactersTable({
 				/>
 				<tbody>
 					{data
-						? stableSort(data.results, getComparator(order, orderBy)).map(
+						? sortElements(data.results, getComparator(order, orderBy)).map(
 								(row) => {
 									return (
 										<tr tabIndex={-1} key={row.name}>
@@ -174,7 +162,8 @@ export default function CharactersTable({
 															setPlanet(getPlanet(planets, row.homeworld))
 														}
 													>
-														{getPlanet(planets, row.homeworld)?.name}
+														{getPlanet(planets, row.homeworld)?.name ||
+															'unknown'}
 													</Link>
 												) : (
 													<Skeleton variant="text" level="body-xs" />
